@@ -3,10 +3,17 @@ import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './login.less'
 import logo from './images/logo.png'
+import {reqLogin} from '../../api/'
 
 export default function Login() {
   const onFinish = (values) => {
-    console.log('Success:Ajax', values);
+    const {username, password} = values
+    console.log('Success:submit', password, username);
+    reqLogin(username, password).then(
+      response => console.log('sucessful', response.data)
+    ).catch(
+      error => console.log('unsucessful?',error.message)
+    );
   };
   const onFinishFailed = (values) => {
     console.log('unSuccess:', values.values);
