@@ -1,22 +1,37 @@
 import React from 'react'
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './login.less'
 import logo from './images/logo.png'
 import {reqLogin} from '../../api/'
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const onFinish = (values) => {
+  let navigate = useNavigate();
+
+  const onFinish = async (values) => {
     const {username, password} = values
-    console.log('Success:submit', password, username);
-    reqLogin(username, password).then(
-      response => console.log('sucessful', response.data)
-    ).catch(
-      error => console.log('unsucessful?',error.message)
-    );
+    //console.log('Success:submit', password, username);
+    //promise: remove .them()to assign callback function
+    // 
+      const result = await reqLogin(username,password)
+      console.log('request successful',result);
+      if (result.status === 0) {
+        message.success('login successfully');
+        //
+        navigate('/');
+
+      } else {
+        message.error(result.msg)
+      }
+    // reqLogin(username, password).then(
+    //   response => console.log('sucessful', response.data)
+    // ).catch(
+    //   error => console.log('unsucessful?',error.message)
+    // );
   };
   const onFinishFailed = (values) => {
-    console.log('unSuccess:', values.values);
+    console.log('unsuccess:', values.values);
   };
 
   const validatePwd = (rule, value,callback) => {
