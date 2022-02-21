@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './login.less'
 import logo from './images/logo.png'
 import {reqLogin} from '../../api/'
 import { useNavigate } from 'react-router-dom';
+import memoryUtils from '../../utils/memoryUtils';
+import storageUtil from '../../utils/storageUtil';
 
 export default function Login() {
   let navigate = useNavigate();
@@ -19,7 +21,10 @@ export default function Login() {
       if (result.status === 0) {
         message.success('login successfully');
         //
-        navigate('/');
+        memoryUtils.user = result.data
+        storageUtil.saveUser(memoryUtils.user ) //save users to local storage
+        navigate('/admin');
+        //save the user data for the admin component
 
       } else {
         message.error(result.msg)
@@ -47,6 +52,23 @@ export default function Login() {
         callback()
       }
   }
+
+  const user = memoryUtils.user
+
+  /*
+  useEffect()的作用就是指定一个副效应函数，组件每渲染一次，该函数就自动执行一次。组件首次在网页 DOM 加载后，副效应函数也会执行。
+  有时候，我们不希望useEffect()每次渲染都执行，这时可以使用它的第二个参数，使用一个数组指定副效应函数的依赖项，只有依赖项发生变化，才会重新渲染。
+
+
+  */
+  useEffect(()=>{
+    if(user && user._id) {
+      console.log('Login to admin',user._id)
+      navigate('/admin')
+    }
+  })
+  
+
 
   return (
     <div className='login'> 

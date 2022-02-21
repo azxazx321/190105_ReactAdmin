@@ -9,8 +9,8 @@ export default function App() {
     
       <BrowserRouter> 
           {/* link is to add path to the address */}
-          {/* <Link to="/login">Login</Link>
-          <Link to="/admin">Admin</Link> */}
+          <Link to="/login">Login</Link>
+          <Link to="/admin">Admin</Link>
           {/* routes is to render components 
           switch has been removed in 6.0*/}
           <Routes>
