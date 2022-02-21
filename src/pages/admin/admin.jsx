@@ -1,6 +1,12 @@
 import React from 'react'
 import memoryUtils from '../../utils/memoryUtils'
 import { Route, Routes,Navigate} from "react-router-dom";
+import { Layout } from 'antd';
+import LeftNav from '../../components/left-nav';
+import Header from '../../components/header';
+
+
+const { Footer, Sider, Content } = Layout;
 
 export default function Admin() {
   const user = memoryUtils.user
@@ -15,8 +21,21 @@ export default function Admin() {
       //console.log('admin');
   } 
   return (
-    <div>
-      Hello {user.username}
-    </div>
+      <Layout style={{height:"100%"}}>
+      <Sider>
+        <LeftNav />
+      </Sider>
+      <Layout>
+          <Header></Header>
+       
+        <Content >Content</Content>
+        <Footer 
+            style={{backgroundColor:"grey",textAlign:'center', color:'#cccccc'}}
+
+        >
+          Footer
+          </Footer>
+      </Layout>
+    </Layout>
   )
 }
