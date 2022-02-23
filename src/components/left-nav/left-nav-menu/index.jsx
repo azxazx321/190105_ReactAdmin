@@ -122,10 +122,11 @@ const { SubMenu } = Menu;
   export default function LeftNavMenu() {
     const [collapsed,setCollapsed ] = useState(false)
     let location = useLocation();
-    const {pathname} = location.state;
-    //let params = useSearchParams ()
-    //const { * } = params;
-    console.log('pathname:>> ',pathname);
+    //const {pathname} = location.state;
+    
+    //const constant不允许修改 var or let
+    let pathname = 'home';
+   
     // state = {
     //   collapsed: false,
     // };
@@ -140,6 +141,16 @@ const { SubMenu } = Menu;
 
       function toggleCollapsed(){
         setCollapsed(!collapsed)
+    }
+
+    function getPathName(){
+      
+      if(!location.state){
+          return pathname = 'home'
+      }else{
+        console.log('pathname:>>>>>>> ',location.state.pathname);
+        return pathname = location.state.pathname
+      }
     }
 
     
@@ -202,8 +213,8 @@ const { SubMenu } = Menu;
             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
           </Button>
           <Menu
-            //defaultSelectedKeys={'home'} //初始选中的菜单项 key 数组	
-            selectedKeys={[pathname]} //当前选中的菜单项 key 数组	
+            defaultSelectedKeys={['home']} //初始选中的菜单项 key 数组	
+            selectedKeys={getPathName()} //当前选中的菜单项 key 数组	
             defaultOpenKeys={[]} //初始展开的 SubMenu 菜单项 key 数组	
             mode="inline"
             theme="dark"
