@@ -23,7 +23,7 @@ const menuList = [
     },
     {
     title: 'User Management',
-    key: 'user',
+    key: '/admin/user',
     icon: 'user'
     },
     {
