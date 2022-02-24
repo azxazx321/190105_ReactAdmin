@@ -37,7 +37,7 @@ export default function Admin() {
       <Layout>
           <Header></Header>
        
-        <Content >
+        <Content style={{margin: 20, backgroundColor: '#fff'}}>
         <Routes>
           <Route path="home" element={<Home />}/>
           <Route path="product" element={<Product />}/>
