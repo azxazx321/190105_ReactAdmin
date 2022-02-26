@@ -16,7 +16,7 @@ const { SubMenu } = Menu;
 
 
   export default function LeftNavMenu() {
-    const [collapsed,setCollapsed ] = useState(false)
+    const [collapsed,setCollapsed] = useState(false)
     //const [nodes, setNode] = useState()
     let location = useLocation();
     console.log('111 :>> ',location);

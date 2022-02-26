@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './index.less'
 
 export default function Header() {
+  const[currentTime, setCurrentTime] = useState()
+
   return (
     <div className='header'>
       
