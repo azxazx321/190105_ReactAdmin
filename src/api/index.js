@@ -17,17 +17,17 @@ export const reqAddUser = user => ajax(BASE + '/manage/user/add',user, 'POST')
 json request interface api function
 return Promise object
 */
-export const reqWeather = () => {
+export const reqWeather = (lat,lon) => {
     //
     return new Promise((resolve, reject) => {
-        const url = `http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=0a120fd7fc7f68a5ff20a04384889269`
+        const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=0a120fd7fc7f68a5ff20a04384889269`
         jsonp(url,{}, (err, data) => {
-            console.log('err,data', err,data.weather[0])
+            //console.log('err,data', err,data.weather[0])
             if(!err && data.weather ){
-                const {main, icon} = data.weather[0]
+                const {main:weather, icon} = data.weather[0]
                 //const description = data.weather[0].description
                 //console.log('description', description)
-                resolve({main, icon})
+                resolve({weather, icon})
             }else{
                 message.error('Weather API is valid')
             }
