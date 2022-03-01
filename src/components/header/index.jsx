@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Modal, Button } from 'antd';
+import { useLocation, useNavigate } from 'react-router-dom'
+import { Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import {formateDate} from '../../utils/dataUtils'
 import memoryUtils from '../../utils/memoryUtils'
@@ -85,21 +85,6 @@ export default function Header() {
     }
    
   },[])
-
-  function showConfirm() {
-    confirm({
-      title: 'Do you Want to delete these items?',
-      icon: <ExclamationCircleOutlined />,
-      content: 'admin',
-      onOk() {
-        console.log('OK');
-
-      },
-      onCancel() {
-        console.log('Cancel');
-      },
-    });
-  }
 
 
   return (
