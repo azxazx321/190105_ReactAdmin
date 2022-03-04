@@ -13,6 +13,13 @@ export const reqLogin = (username, password) => ajax(BASE + '/login',{username, 
 
 export const reqAddUser = user => ajax(BASE + '/manage/user/add',user, 'POST')
 
+export const reqCategory = (parentId) => ajax(BASE + '/manage/category/list',{parentId}) //形参默认值为get 可以省略
+
+export const reqAddCategory = (parentId,categoryName) => ajax(BASE + '/manage/category/add',{parentId,categoryName},'POST') //形参默认值为get 可以省略
+
+export const reqUpdateCategory = (categoryId, categoryName) => ajax(BASE + '/manage/category/update',{categoryId, categoryName},'POST')
+
+
 /*
 json request interface api function
 return Promise object
