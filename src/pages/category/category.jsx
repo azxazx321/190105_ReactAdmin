@@ -145,7 +145,7 @@ export default function Category() {
   //getInputName自身无法调用，只能子组件调用
   const getInputName = (values) => {
     //console.log('before',newCategoryName)
-    newCategoryName = values.newCategory
+    newCategoryName = values
     //console.log('after',newCategoryName)
 
   }

@@ -29,9 +29,17 @@ export default function UpdateCategory(props) {
 
     const onFinish = (values) => {
         console.log(values);
-        props.setForm(values)
+  
         };
       
+    // useEffect(()=>{
+    // },
+    // [])
+
+    const onChange = (e) => {
+      console.log('onchange',e.target.value)
+      props.setForm(e.target.value)
+    }
       
 
     return (
@@ -49,15 +57,15 @@ export default function UpdateCategory(props) {
             },
             ]}
         >
-            <Input placeholder={props.categoryName}/>
+            <Input placeholder={props.categoryName} onChange={onChange}/>
         </Form.Item>
         
        
         
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            <Button type="primary" htmlType="submit">
+            {/* <Button type="primary" htmlType="submit">
             Submit
-            </Button>
+            </Button> */}
         </Form.Item>
         </Form>
 
