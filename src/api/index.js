@@ -36,7 +36,7 @@ export const reqWeather = (lat,lon) => {
                 //console.log('description', description)
                 resolve({weather, icon})
             }else{
-                message.error('Weather API is valid')
+                message.error('Weather API is invalid')
             }
         })
     })

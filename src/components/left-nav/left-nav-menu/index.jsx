@@ -9,7 +9,7 @@ import {
   ContainerOutlined,
   MailOutlined,
 } from '@ant-design/icons';
-import { Link, useLocation,useParams,useSearchParams  } from 'react-router-dom';
+import { Link, useLocation  } from 'react-router-dom';
 import menuList from '../../../config/menuConfig';
 
 const { SubMenu } = Menu;
