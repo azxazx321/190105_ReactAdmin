@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Button, Table, message, Modal } from 'antd'
 import { PlusOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import LinkButton from '../../components/header/link-button';
-import { reqCategory, reqUpdateCategory } from '../../api';
+import { reqCategory, reqUpdateCategory,reqAddCategory } from '../../api';
 import AddCategory from './add-category';
 import UpdateCategory from './update-category';
 
@@ -15,7 +15,7 @@ export default function Category() {
   const[isModalVisible,setModelVisible] = useState(0)
   const[currentCategory,setcurrentCategory] = useState('')
   let newCategoryName = '' 
-
+  let form
   const dataSource = [
     {
       parentId: "5e12b8bce31bb727e4b0e348",
@@ -86,7 +86,8 @@ export default function Category() {
 
   const getCategories = async ()=> {
     setLoading(true)
-    const result = await reqCategory(parentId)
+    //parentId = newId || parentId
+    const result = await reqCategory( parentId)
     if(result.status===0){
       const categories = result.data
       if(parentId === '0'){
@@ -105,7 +106,7 @@ export default function Category() {
   const showCategory = () =>{
     setParentId('0')
     setParentName('')
-    subCategory([])
+    setSubCategory([])
   }
 
   const showAdd = () => {
@@ -122,38 +123,56 @@ export default function Category() {
     setModelVisible(0)
     
     const categoryId = currentCategory._id
-    console.log('???????????',categoryId,newCategoryName);
+    const {newCategory:newCategoryName} = form.getFieldsValue()
+    console.log('???????????',currentCategory._id,newCategoryName);
 
     const result = await reqUpdateCategory(categoryId, newCategoryName)
     console.log('???????????',result);
 
     if(result.status === 0){
-      getCategories()
+        getCategories()
+
     }
 
   }
   
-  const addCategory  = () => {
+  const addCategory  = async () => {
     setModelVisible(0)
+    const {category,newCategory} = form.getFieldsValue()
+    const categoryId = category
+    console.log('???????????',form.getFieldsValue());
+
+    form.resetFields()
+
+    const result = await reqAddCategory(categoryId, newCategory)
+    console.log('???????????',result);
+
+    if(result.status === 0){
+      if(categoryId===parentId){
+        getCategories() 
+
+      } 
+    }
 
   }
 
   const handleCancel = () => {
+    form.resetFields()
     setModelVisible(0)
   }
 
   //getInputName自身无法调用，只能子组件调用
   const getInputName = (values) => {
-    //console.log('before',newCategoryName)
+    console.log('before',newCategoryName)
     newCategoryName = values
-    //console.log('after',newCategoryName)
+    console.log('after',newCategoryName)
 
   }
 
+  const getForm = (addForm) => {
+    form = addForm
+  }
 
- 
-
-  
 
   const title = parentId === '0' ? "Category List" : (
       <span>
@@ -176,10 +195,10 @@ export default function Category() {
         pagination={{defaultPageSize: 8, showQuickJumper: true}}
       />
       <Modal title="Add Category" visible={isModalVisible === 1} onOk={addCategory} onCancel={handleCancel}>
-        <AddCategory/>
+        <AddCategory categories={categories} parentId={parentId} getForm={getForm}/>
       </Modal>
       <Modal title="Update Category" visible={isModalVisible === 2} onOk={updateCategory} onCancel={handleCancel} getContainer={false} >
-        <UpdateCategory categoryName={currentCategory.name} setForm={getInputName}/>
+        <UpdateCategory categoryName={currentCategory.name} setForm={getInputName} getForm={getForm}/>
       </Modal>
     </Card>
   )

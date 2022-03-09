@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Input, Select, Button } from 'antd';
+import PropTypes from 'prop-types'
+import { render } from 'less';
 
 const { Option } = Select;
 
@@ -12,57 +14,69 @@ const layout = {
     },
   };
   /* eslint-disable no-template-curly-in-string */
-  
-  const validateMessages = {
-    required: '${label} is required!',
-    types: {
-      email: '${label} is not a valid email!',
-      number: '${label} is not a valid number!',
-    },
-    number: {
-      range: '${label} must be between ${min} and ${max}',
-    },
-  };
-  /* eslint-enable no-template-curly-in-string */
-  
 
-export default function AddCategory() {
+
+export default function AddCategory(props) {
+  const [form] = Form.useForm();
+  props.getForm(form)
+
+
+  //   PropTypes = {
+  //     categories: PropTypes.array.isRequired
+  //  }
+    const {parentId,categories} = props
+    //const[defaultParentId,setDefaultParentId] = useState('')
+
     const onFinish = (values) => {
         console.log(values);
         };
 
-    return (
-        // <Form>
-        //     <Item>
-        //     <Select>
-        //         <Option value='0'>ggfdgdsf</Option>
-        //     </Select>
-        //     </Item>
-        //     <Item><Input placeholder='????'/></Item>
-            
-        // </Form>
-        <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+    function handleChange(e) {
+      console.log(e.target.value);
+      //props.setForm(e.target.value)
+      props.getForm(form)
+      console.log('form',form.getFieldsValue());
+    }
+
+    useEffect(()=>{
+      form.setFieldsValue({
+        category: parentId,
+      });
+      //console.log('useEffect parentId',parentId);
+    },[props])
+
         
-        <Form.Item
+
+    return (
+        <Form {...layout} name="nest-messages" onFinish={onFinish} form={form}>
+        
+        <Form.Item shouldUpdate
             name='category'
             label="Category"
+            initialValue= '0'
             rules={[
             {
                 required: true,
             },
             ]}
         >
-            <Select
-        style={{ }}
-        
-      >
-        <Option value="rmb">RMB</Option>
-        <Option value="dollar">Dollar</Option>
-      </Select>
+            <Select >
+              <Option value='0'>1 category</Option>
+            {
+                categories.map(
+                  (category) => (<Option value={category._id}>
+                          {category.name}
+                        </Option>)
+                  
+                )
+            }
+          </Select>
         </Form.Item>
         <Form.Item
             name='newCategory'
             label="New Category"
+            initialValue=''
+            onChange={handleChange}
             rules={[
             {
                 required: true,
@@ -74,11 +88,7 @@ export default function AddCategory() {
         
        
         
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            <Button type="primary" htmlType="submit">
-            Submit
-            </Button>
-        </Form.Item>
+        
         </Form>
 
         

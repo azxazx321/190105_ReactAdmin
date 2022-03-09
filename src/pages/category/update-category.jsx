@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Form, Input, Select, Button } from 'antd';
+import React from 'react'
+import { Form, Input} from 'antd';
 
 
 const layout = {
@@ -26,6 +26,8 @@ const layout = {
   
 
 export default function UpdateCategory(props) {
+    const [form] = Form.useForm();
+    props.getForm(form)
 
     const onFinish = (values) => {
         console.log(values);
@@ -36,37 +38,35 @@ export default function UpdateCategory(props) {
     // },
     // [])
 
-    const onChange = (e) => {
-      console.log('onchange',e.target.value)
-      props.setForm(e.target.value)
+    const onChange = () => {
+      console.log('onchange',form.getFieldValue())
+      //props.setForm(e.target.value)
+      
     }
       
 
     return (
        
-        <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+        <Form {...layout} name="nest-messages"  form={form}>
         
         
         <Form.Item
             name='newCategory'
             label="New Category"
             initialValue=''
+            onChange={onChange}
             rules={[
             {
                 required: true,
             },
             ]}
         >
-            <Input placeholder={props.categoryName} onChange={onChange}/>
+            <Input placeholder={props.categoryName} />
         </Form.Item>
         
        
         
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            {/* <Button type="primary" htmlType="submit">
-            Submit
-            </Button> */}
-        </Form.Item>
+       
         </Form>
 
         
