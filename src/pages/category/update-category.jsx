@@ -13,14 +13,8 @@ const layout = {
   /* eslint-disable no-template-curly-in-string */
   
   const validateMessages = {
-    required: '${label} is required!',
-    types: {
-      email: '${label} is not a valid email!',
-      number: '${label} is not a valid number!',
-    },
-    number: {
-      range: '${label} must be between ${min} and ${max}',
-    },
+    required: '${label} is required!!!'
+   
   };
   /* eslint-enable no-template-curly-in-string */
   
@@ -39,15 +33,15 @@ export default function UpdateCategory(props) {
     // [])
 
     const onChange = () => {
-      console.log('onchange',form.getFieldValue())
-      //props.setForm(e.target.value)
-      
+      console.log('onchange',
+      form.getFieldValue()  
+      )  
     }
       
 
     return (
        
-        <Form {...layout} name="nest-messages"  form={form}>
+        <Form {...layout} name="nest-messages"  form={form} validateMessages={validateMessages}>
         
         
         <Form.Item
@@ -57,7 +51,8 @@ export default function UpdateCategory(props) {
             onChange={onChange}
             rules={[
             {
-                required: true,
+                required: true
+                
             },
             ]}
         >

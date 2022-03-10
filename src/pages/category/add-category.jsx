@@ -14,6 +14,11 @@ const layout = {
     },
   };
   /* eslint-disable no-template-curly-in-string */
+  
+  const validateMessages = {
+    required: '${label} is required!!!'
+   
+  };
 
 
 export default function AddCategory(props) {
@@ -21,36 +26,28 @@ export default function AddCategory(props) {
   props.getForm(form)
 
 
-  //   PropTypes = {
-  //     categories: PropTypes.array.isRequired
-  //  }
+
     const {parentId,categories} = props
-    //const[defaultParentId,setDefaultParentId] = useState('')
 
-    const onFinish = (values) => {
-        console.log(values);
-        };
 
-    function handleChange(e) {
-      console.log(e.target.value);
+    function handleChange() {
+      console.log('form',form.getFieldsValue()
       //props.setForm(e.target.value)
-      props.getForm(form)
-      console.log('form',form.getFieldsValue());
+      )
     }
 
     useEffect(()=>{
       form.setFieldsValue({
         category: parentId,
       });
-      //console.log('useEffect parentId',parentId);
     },[props])
 
         
 
     return (
-        <Form {...layout} name="nest-messages" onFinish={onFinish} form={form}>
+        <Form {...layout} name="nest-messages" form={form} validateMessages={validateMessages}>
         
-        <Form.Item shouldUpdate
+        <Form.Item 
             name='category'
             label="Category"
             initialValue= '0'
