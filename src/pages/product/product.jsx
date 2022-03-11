@@ -1,40 +1,17 @@
-import { Button, Card, Input, Select,Icon, Table } from 'antd'
+import { Button, Card, Input, Select,Icon, Table, message } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import LinkButton from '../../components/header/link-button';
+import { reqProducts } from '../../api';
+import { PAGE_SIZE } from '../../utils/constants';
 
 const { Option } = Select;
 
 export default function Product() {
   const[productData, setProductData] = useState([])
-  const dataSource = [
-    // {
-    //   key: '1',
-    //   name: 'Mike',
-    //   age: 32,
-    //   address: '10 Downing Street',
-    // },
-    // {
-    //   key: '2',
-    //   name: 'John',
-    //   age: 42,
-    //   address: '10 Downing Street',
-    // },
-    {
-      "_id" : "5e12b97de31bb727e4b0e349", 
-    "status" : 0, 
-    "imgs" : [
-        "1578588737108-index.jpg"
-    ], 
-      name : "Tests", 
-    desc : "年度重量级新品，X390、T490全新登场 更加轻薄机身设计9", 
-    price : 600, 
-    pCategoryId : "5e12b8bce31bb727e4b0e348", 
-    categoryId : "5fc74b650dd9b10798413162", 
-    detail : "<p><span style=\"color: rgb(228,57,60);background-color: rgb(255,255,255);font-size: 12px;\">想你所需，超你所想！精致外观，轻薄便携带光驱，内置正版office杜绝盗版死机，全国联保两年！</span></p>\n<p><span style=\"color: rgb(102,102,102);background-color: rgb(255,255,255);font-size: 16px;\">联想（Lenovo）扬天V110 15.6英寸家用轻薄便携商务办公手提笔记本电脑 定制【E2-9010/4G/128G固态】 2G独显 内置</span></p>\n<p><span style=\"color: rgb(102,102,102);background-color: rgb(255,255,255);font-size: 16px;\"></span></p>\n"
-    }
-  ];
-  
+  const[pages, setPages] = useState(1)
+  const[loading, setLoading] = useState(false)
+
   const columns = [
     {
       title: 'Product Name',
@@ -77,6 +54,26 @@ export default function Product() {
     },
   ];
 
+  useEffect(() => {
+    getProducts()
+  
+  },[]
+
+  )
+ 
+  const getProducts = async(pageNumber) => {
+    setLoading(true)
+    const result = await reqProducts(pageNumber,PAGE_SIZE)
+    setLoading(false)
+    if(result.status===0){
+      const {total,list} = result.data
+      setProductData(list)
+      setPages(total)
+    } else{
+      message.error('cant get the product info')
+    }
+  }
+
   const title = (
     <span >
       <Select style={{width:100}}>
@@ -89,7 +86,7 @@ export default function Product() {
     </span>
   )
 
-
+  
   const extra = (
     <Button type='primary'>
        <PlusOutlined/> Add Product
@@ -98,9 +95,17 @@ export default function Product() {
   return (
     <Card title={title} extra={extra}>
       <Table
+        loading={loading}
         rowKey='_id'
-        dataSource={dataSource} 
-        columns={columns} />;
+        dataSource={productData} 
+        columns={columns} 
+        pagination={{
+          defaultPageSize: PAGE_SIZE, 
+          showQuickJumper: true, 
+          total: pages, 
+          onChange:getProducts
+        }}/>;
+
 
     </Card>
   )

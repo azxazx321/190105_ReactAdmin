@@ -19,7 +19,7 @@ export const reqAddCategory = (parentId,categoryName) => ajax(BASE + '/manage/ca
 
 export const reqUpdateCategory = (categoryId, categoryName) => ajax(BASE + '/manage/category/update',{categoryId, categoryName},'POST')
 
-
+export const reqProducts = (pageNum,pageSize) => ajax(BASE + '/manage/product/list',{pageNum,pageSize}) 
 /*
 json request interface api function
 return Promise object
