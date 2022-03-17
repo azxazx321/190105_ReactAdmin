@@ -40,7 +40,7 @@ export default function Admin() {
         <Content style={{margin: 20, backgroundColor: '#fff'}}>
         <Routes>
           <Route path="home" element={<Home />}/>
-          <Route path="product" element={<Product />}/>
+          <Route path="product/*" element={<Product />}/>
           <Route path="user" element={<User />}/>
           <Route path="role" element={<Role />}/>
           <Route path="category" element={<Category />}/>

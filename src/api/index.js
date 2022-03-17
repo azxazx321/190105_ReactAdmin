@@ -20,6 +20,14 @@ export const reqAddCategory = (parentId,categoryName) => ajax(BASE + '/manage/ca
 export const reqUpdateCategory = (categoryId, categoryName) => ajax(BASE + '/manage/category/update',{categoryId, categoryName},'POST')
 
 export const reqProducts = (pageNum,pageSize) => ajax(BASE + '/manage/product/list',{pageNum,pageSize}) 
+
+export const reqSearchProducts = ({pageNum,pageSize,searchKeyword,searchType}) => ajax(BASE + '/manage/product/search',{pageNum,pageSize,[searchType]:searchKeyword}) 
+
+export const reqSingleCategory = (categoryId) => ajax(BASE + '/manage/category/info',{categoryId}) //形参默认值为get 可以省略
+
+export const reqUpdateProductStatus = (productId,status) => ajax(BASE + '/manage/product/updateStatus',{productId,status},'POST') //形参默认值为get 可以省略
+
+
 /*
 json request interface api function
 return Promise object
