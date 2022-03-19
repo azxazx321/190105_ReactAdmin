@@ -118,7 +118,9 @@ export default function ProductHome() {
   
   const extra = (
     <Button type='primary'>
-       <PlusOutlined/> Add Product
+    <Link to="addupdate" > 
+    <PlusOutlined/> Add Product
+    </Link>
       </Button>
   )
   return (
