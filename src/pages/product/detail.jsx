@@ -28,7 +28,6 @@ export default function Detail() {
         // const result2 = await reqSingleCategory(categoryId)
         const cName1 = results[0].data.name
         const cName2 = results[1].data.name
-        console.log('cName1',cName1,cName2)
         setCName1(cName1)
         setCName2(cName2)
       }
