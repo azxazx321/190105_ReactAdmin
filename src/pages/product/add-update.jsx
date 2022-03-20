@@ -4,45 +4,25 @@ import LinkButton from '../../components/header/link-button';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { reqCategory } from '../../api';
+import { options } from 'less';
 
 
 const {Item} = Form
 const { TextArea } = Input;
 
-const option = [
-  {
-    code: 'zhejiang',
-    name: 'Zhejiang',
-    items: [
-      {
-        code: 'hangzhou',
-        name: 'Hangzhou',
-        items: [
-          {
-            code: 'xihu',
-            name: 'West Lake',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    code: 'jiangsu',
-    name: 'Jiangsu',
-    items: [
-      {
-        code: 'nanjing',
-        name: 'Nanjing',
-        items: [
-          // {
-          //   code: 'zhonghuamen',
-          //   name: 'Zhong Hua Men',
-          // },
-        ],
-      },
-    ],
-  },
-];
+// const optionLists = [
+//   {
+//     value: 'zhejiang',
+//     label: 'Zhejiang',
+//     isLeaf: false,
+//   },
+//   {
+//     value: 'jiangsu',
+//     label: 'Jiangsu',
+//     isLeaf: false,
+//   },
+// ];
+
 const layout = {
   labelCol: { span:2},
   wrapperCol: { span: 4 },
@@ -50,9 +30,13 @@ const layout = {
 
 export default function ProductAddUpdate() {
   const [form] = Form.useForm(); 
-  const[options, setOptions] = useState([])
+  const [options, setOptions] = useState([]);
+
+  const onChange = (value, selectedOptions) => {
+    console.log(value, selectedOptions);
+  };
   const onFinish = (values) => {
-    console.log('Success:', values.productName);
+    console.log('Success:', values);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -66,31 +50,58 @@ export default function ProductAddUpdate() {
       }
       return Promise.reject(new Error('Price must be greater than zero!'))
   }
+  
+  const loadData = async selectedOptions => {
+    const targetOption = selectedOptions[selectedOptions.length - 1];
+    targetOption.loading = true;
+
+    const subCategories = await getCategories(targetOption.value)
+    if(subCategories && subCategories.length > 0){
+      const options = subCategories.map(
+        (category)=> ({
+          value: category._id,
+          label: category.name,
+          isLeaf: true,
+        })
+      )
+      targetOption.children = options
+
+    }else{
+      targetOption.isLeaf = true
+    }
+    
+    setOptions([...options])
+  }
 
   const initOptions = (categories) => {
     const options = categories.map(
       (category)=> ({
-        code: category._id,
-        name: category.name,
-        item:[]
+        value: category._id,
+        label: category.name,
+        isLeaf: false,
       })
     )
-      setOptions(options)
-
+    setOptions(options)
   }
 
   const getCategories = async (parentId) => {
     const result = await reqCategory(parentId)
     if(result.status===0){
       const categories = result.data
-      initOptions(categories)
+      console.log(parentId)
+      if(parentId==='0'){
+        initOptions(categories)
+      }else{
+        return categories
+      }
 
     }
   }
 
   useEffect(()=>{
-    getCategories()
+    getCategories('0')
   },[])
+
   const title = (
     <span>
     <LinkButton>
@@ -137,9 +148,11 @@ export default function ProductAddUpdate() {
             rules={[{ required: true, message: 'Please input Product category!' }]}
             >
             <Cascader
-                fieldNames={{ label: 'name', value: 'code', children: 'items' }}
+                
                 options={options}
+                loadData={loadData}
                 placeholder="Please select"
+                changeOnSelect 
               />
         </Item>
         <Item 
