@@ -1,6 +1,6 @@
 import { Button, Card, Input, Select,Icon, Table, message } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect, createRef } from 'react'
 import LinkButton from '../../components/header/link-button';
 import { reqProducts, reqSearchProducts, reqUpdateProductStatus } from '../../api';
 import { PAGE_SIZE } from '../../utils/constants';
@@ -55,7 +55,9 @@ export default function ProductHome() {
             <LinkButton>
             <Link to="detail" state={{product}}>Details</Link>
             </LinkButton>
-            <LinkButton>Alter</LinkButton>
+            <LinkButton>
+            <Link to="addupdate" state={{product}}>Update</Link>
+            </LinkButton>
           </span>
         )
       }

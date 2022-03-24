@@ -27,6 +27,9 @@ export const reqSingleCategory = (categoryId) => ajax(BASE + '/manage/category/i
 
 export const reqUpdateProductStatus = (productId,status) => ajax(BASE + '/manage/product/updateStatus',{productId,status},'POST') //形参默认值为get 可以省略
 
+export const reqDeleteImg = (name) => ajax(BASE + '/manage/img/delete',{name},'POST')
+
+export const reqAddOrUppdateProduct = (product) => ajax(BASE + '/manage/product/' + (product._id ? 'update' : 'add'),product,'POST')
 
 /*
 json request interface api function

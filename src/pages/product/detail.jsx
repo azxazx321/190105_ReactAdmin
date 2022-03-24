@@ -72,7 +72,7 @@ export default function Detail() {
                   <img key={img} className='product-img' src={BASE_IMG_URL + img} alt="img" />
 
                 ))}</span>
-                <img className='product-img' src='.' alt="img" />
+               
                 
               </List.Item>
               <List.Item>
