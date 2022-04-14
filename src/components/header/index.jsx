@@ -49,7 +49,7 @@ export default function Header() {
        if( item.key === currentPath ){
          title = item.title
        } else if( item.children ){
-        const childItem = item.children.find(childItem => childItem.key === currentPath)
+        const childItem = item.children.find(childItem => currentPath.indexOf(childItem.key)===0)
         if (childItem){
           title = childItem.title
         }

@@ -31,6 +31,9 @@ export const reqDeleteImg = (name) => ajax(BASE + '/manage/img/delete',{name},'P
 
 export const reqAddOrUppdateProduct = (product) => ajax(BASE + '/manage/product/' + (product._id ? 'update' : 'add'),product,'POST')
 
+export const reqRoles = () => ajax(BASE + '/manage/role/list')
+
+
 /*
 json request interface api function
 return Promise object
