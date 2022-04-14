@@ -19,12 +19,10 @@ export default function Header() {
   let location = useLocation();
   let navigate = useNavigate();
   let currentpath = location.pathname
-  //const title = getTitle(currentpath)
-  //console.log('location in header',path)
+
 
 
   const updateTime = ()=>{ const timeId = setInterval(() => {
-    //const currentTime = formateDate(Date.now)
     setCurrentTime(
       formateDate(Date.now())
     )
@@ -41,11 +39,8 @@ export default function Header() {
   }
   
   const getTitle = (currentPath) => {
-    //return currentPath
      let title
-     //console.log('object :>> ');
     menuList.forEach( item => {
-     //console.log('item :>> ', item);
        if( item.key === currentPath ){
          title = item.title
        } else if( item.children ){

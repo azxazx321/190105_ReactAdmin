@@ -37,7 +37,6 @@ export default function ProductHome() {
       title: 'Status',
       render:(product) => {
         const {status,_id} = product
-        //console.log(newStatus)
         return(
           <span>
             <Button type='primary' onClick={()=>updateStatus(_id, status)}>{status===1 ? 'Off the shelf': 'On the shelf'}</Button>

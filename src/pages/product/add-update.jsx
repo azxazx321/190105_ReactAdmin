@@ -43,7 +43,6 @@ export default function ProductAddUpdate() {
   product = product.product || {}
   const{pCategoryId, categoryId} = product
   const categoryIds = []
-  //console.log(product.detail)
   const list = ()=>{
     
     if(isUpdate){

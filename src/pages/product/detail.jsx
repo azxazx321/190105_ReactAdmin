@@ -24,8 +24,6 @@ export default function Detail() {
         setCName1(cName1)
       } else {
         const results = await Promise.all([reqSingleCategory(pCategoryId), reqSingleCategory(categoryId)])
-        // const result1 = await reqSingleCategory(pCategoryId)
-        // const result2 = await reqSingleCategory(categoryId)
         const cName1 = results[0].data.name
         const cName2 = results[1].data.name
         setCName1(cName1)

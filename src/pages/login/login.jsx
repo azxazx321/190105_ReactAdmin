@@ -13,9 +13,7 @@ export default function Login() {
 
   const onFinish = async (values) => {
     const {username, password} = values
-    //console.log('Success:submit', password, username);
-    //promise: remove .them()to assign callback function
-    // 
+   
       const result = await reqLogin(username,password)
       console.log('request successful',result);
       if (result.status === 0) {
@@ -29,11 +27,7 @@ export default function Login() {
       } else {
         message.error(result.msg)
       }
-    // reqLogin(username, password).then(
-    //   response => console.log('sucessful', response.data)
-    // ).catch(
-    //   error => console.log('unsucessful?',error.message)
-    // );
+  
   };
   const onFinishFailed = (values) => {
     console.log('unsuccess:', values.values);
@@ -55,12 +49,7 @@ export default function Login() {
 
   const user = memoryUtils.user
 
-  /*
-  useEffect()的作用就是指定一个副效应函数，组件每渲染一次，该函数就自动执行一次。组件首次在网页 DOM 加载后，副效应函数也会执行。
-  有时候，我们不希望useEffect()每次渲染都执行，这时可以使用它的第二个参数，使用一个数组指定副效应函数的依赖项，只有依赖项发生变化，才会重新渲染。
-
-
-  */
+  
   useEffect(()=>{
     if(user && user._id) {
       console.log('Login to admin',user._id)
