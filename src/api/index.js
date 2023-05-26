@@ -33,6 +33,9 @@ export const reqAddOrUppdateProduct = (product) => ajax(BASE + '/manage/product/
 
 export const reqRoles = () => ajax(BASE + '/manage/role/list')
 
+export const reqAddRole = (roleName) => ajax(BASE + '/manage/role/add',{roleName}, 'POST')
+
+
 
 /*
 json request interface api function

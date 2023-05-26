@@ -135,27 +135,13 @@ export default function Category() {
       console.log(err,'err')
     })
     
-    // const categoryId = currentCategory._id
-    // const {newCategory:newCategoryName} = form.getFieldsValue()
-    // console.log('???????????',currentCategory._id,newCategoryName);
-
-    // const result = await reqUpdateCategory(categoryId, newCategoryName)
-    // console.log('???????????',result);
-
-    // if(result.status === 0){
-    //     getCategories()
-
-    // }
+   
 
   }
   
   const addCategory  =  () => {
 
-    // form.validateFields().then(value => { 
-
-    //   console.log(value);
-      
-    //   }).catch(err => {  console.log(err) });
+   
     form.validateFields().then(  async (value)=>{
       setModelVisible(0)
       console.log('value',value);
